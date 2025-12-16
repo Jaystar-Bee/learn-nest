@@ -1,0 +1,92 @@
+
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+{{baseUrl}}
+
+### GET ALL TASKS
+GET {{baseUrl}}/tasks
+
+
+### GET ALL TASKS IN PAGE 2
+GET {{baseUrl}}/tasks?offset=1
+
+
+### GET ALL TASKS IN PROGRESS
+GET {{baseUrl}}/tasks?search=video
+
+
+### GET ALL TASKS BY LABEL
+GET {{baseUrl}}/tasks?labels=Class,Man
+
+
+### CREATE NEW TASK
+
+# @name createTask
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+    "title": "Make",
+    "description": "I want to work",
+    "status": "OPEN",
+    "userId": "9715012c-9049-4ac5-a0a3-0f72bc7615f8",
+    "labels": [
+    {
+        "name": "Morning"
+    },
+    {
+        "name": "Class"
+    }
+]
+}
+
+### SET TASK ID
+@taskId = {{ createTask.response.body.id }}
+
+
+### GET TASK BY ID
+GET {{baseUrl}}/tasks/{{taskId}}
+
+
+### UPDATE A TASK
+
+PATCH {{baseUrl}}/tasks/{{taskId}}
+Content-Type: {{contentType}}
+
+{
+    "status": "IN_PROGRESS",
+    "labels": [
+    {
+        "name": "Man"
+    },
+    {
+        "name": "Man"
+    }
+]
+}
+
+### DELETE A TASK
+DELETE {{baseUrl}}/tasks/{{taskId}}
+
+
+
+### ADD MORE TASK LABEL
+POST {{baseUrl}}/tasks/{{taskId}}/labels
+Content-Type: {{contentType}}
+
+[
+    {
+        "name": "Bug"
+    },
+    {
+        "name": "Bug"
+    }
+]
+
+
+### DELETE TASK LABEL
+DELETE {{baseUrl}}/tasks/{{taskId}}/labels
+Content-Type: {{contentType}}
+
+["ac088481-dcf3-4f0b-9a92-d177890a5ab6"]
